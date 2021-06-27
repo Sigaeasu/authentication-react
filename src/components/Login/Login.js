@@ -4,7 +4,7 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
-// NOTE email useReducer function
+// ANCHOR email useReducer function
 const emailReducer = (state, action) => {
   // NOTE When you type, validate new state
   if (action.type === 'USER_INPUT') {
@@ -19,7 +19,7 @@ const emailReducer = (state, action) => {
   return { value: '', isValid: false};
 }
 
-// NOTE password useReducer function
+// ANCHOR password useReducer function
 const passwordReducer = (state, action) => {
   // NOTE When you type, validate new state
   if (action.type === 'USER_INPUT') {
@@ -36,41 +36,55 @@ const passwordReducer = (state, action) => {
 
 const Login = (props) => {
   /* const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState() */;
+  const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
-  const [passwordIsValid, setPasswordIsValid] = useState();
+  const [passwordIsValid, setPasswordIsValid] = useState();*/
   const [formIsValid, setFormIsValid] = useState(false);
 
-  // NOTE use useReducer() for email input
+  // ANCHOR use useReducer() for email input
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     // NOTE This is emailState state
     value: '',
     isValid: false
   })
 
-  // NOTE use useReducer() for password input
+  // ANCHOR use useReducer() for password input
   const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
     // NOTE This is emailState state
     value: '',
     isValid: false
   })
 
-  // NOTE useEffect - Check both email & password after everything done running
-  /* useEffect(() => {
+  // NOTE Destructuring email and password state into isValid only
+  const { isValid: emailIsValid} = emailState;
+  const { isValid: passwordIsValid} = passwordState;
+
+  // ANCHOR useEffect - Check both email & password after everything done running
+  useEffect(() => {
     // NOTE set timer on 500ms, only run once below before time out
     const identifier = setTimeout(() => {
       setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+        // NOTE Basic
+        /* enteredEmail.includes('@') && enteredPassword.trim().length > 6 */
+      
+        // NOTE Combine with useReducer()
+        // NOTE Only read isValid value, after destructuring
+        emailIsValid && passwordIsValid
       );
     }, 500); 
 
     // NOTE clean up function, re run time out once done
     return () => {
-      clearTimeout();
+      clearTimeout(identifier);
     }
 
   // NOTE add dependencies. If dependencies is changed, useEffect will run
-  }, [enteredEmail, enteredPassword]) */
+  // NOTE Basic
+  // }, [enteredEmail, enteredPassword])
+
+  // NOTE Combine with useReducer()
+  // NOTE Only read isValid value, after destructuring
+  }, [emailIsValid, passwordIsValid])
 
   const emailChangeHandler = (event) => {
     // setEnteredEmail(event.target.value);
@@ -82,14 +96,10 @@ const Login = (props) => {
 
     // NOTE useReducer() - Call function with type : USER_INPUT
     dispatchEmail({type: 'USER_INPUT', val: event.target.value})
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
+    // setEnteredPassword(event.target.value);
 
     // NOTE Check if password is valid, then check password 
     /* setFormIsValid(
@@ -98,10 +108,6 @@ const Login = (props) => {
 
     // NOTE useReducer() - Call function with type : USER_INPUT
     dispatchPassword({type: 'USER_INPUT', val: event.target.value})
-
-    setFormIsValid(
-      emailState.isValid && enteredPassword.trim().length > 6
-    );
   };
 
   const validateEmailHandler = () => {
@@ -114,7 +120,7 @@ const Login = (props) => {
 
   const validatePasswordHandler = () => {
     // NOTE Basic - Set password state when you leave the input box
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    // setPasswordIsValid(enteredPassword.trim().length > 6);
 
     // NOTE useReducer()
     dispatchPassword({type: 'INPUT_BLUR'})
@@ -124,7 +130,8 @@ const Login = (props) => {
     event.preventDefault();
     /* props.onLogin(enteredEmail, enteredPassword); */
 
-    props.onLogin(emailState.value, enteredPassword);
+    // NOTE useReducer
+    props.onLogin(emailState.value, passwordState.value);
   };
 
   return (
