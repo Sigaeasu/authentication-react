@@ -1,9 +1,13 @@
 # AUTHENTICATION WITH REACT
 
-## IMPLEMENTATION OF useEffect() IN REACT.JS
+## IMPLEMENTATION OF `useEffect()` IN REACT.JS
 
 Learn how useEffect works in authentication app. For the example, placing useEffect based on username & password input. Give an effect while you typing or submit for authentication.
 
-## IMPLEMENTATION OF useReducer() IN REACT.JS
+## IMPLEMENTATION OF `useReducer()` IN REACT.JS
 
-Combine useEffect() with useReducer() to shorten your code. You will place state, function inside useReducer() then call it in your useEffect() for effeciency.
+Combine `useEffect()` with `useReducer()` to shorten your code. You will place state, function inside `useReducer()` then call it in your `useEffect()` for effeciency.
+
+### NOTES
+
+Use VSCode extension **COMMENT ANCHORS** by *EXODIUS STUDIOS* for easier reading.
