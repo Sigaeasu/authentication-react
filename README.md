@@ -8,6 +8,10 @@ Learn how useEffect works in authentication app. For the example, placing useEff
 
 Combine `useEffect()` with `useReducer()` to shorten your code. You will place state, function inside `useReducer()` then call it in your `useEffect()` for effeciency.
 
+## IMPLEMENTATION OF `useContext` IN REACT.JS
+
+Using `useContext` in passing login status inside localstorage make it easier for all descendant components to read it without be pass one by one by parent's component.
+
 ### NOTES
 
 Use VSCode extension **COMMENT ANCHORS** by *EXODIUS STUDIOS* for easier reading.
