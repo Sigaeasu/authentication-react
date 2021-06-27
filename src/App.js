@@ -1,43 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, {useContext} from 'react';
 
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './context/auth-context';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // ANCHOR Call context
+  const ctx = useContext(AuthContext)
 
-  // NOTE Use useEffect() to evaluate the function inside after everything outside useEffect is done running
-  useEffect(() => {
-    // NOTE Check if there is status 1 in local storage
-    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
-    if (storedUserLoggedInInformation === '1') {
-      setIsLoggedIn(true)
-    }
-  }, [])
-
-  const loginHandler = (email, password) => {
-
-    // NOTE Store status to local storage
-    localStorage.setItem('isLoggedIn', '1');
-
-    setIsLoggedIn(true);
-  };
-
-  const logoutHandler = () => {
-
-    // NOTE Remove status in local storage
-    localStorage.removeItem('isLoggedIn')
-
-    setIsLoggedIn(false);
-  };
+  // NOTE Move all props and method in here into auth-context.js
 
   return (
     <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
+      <MainHeader />
       <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
+        {/* NOTE Comment these because all props and method has moved into context */}
+        {/* {!isLoggedIn && <Login onLogin={loginHandler} />}
+        {isLoggedIn && <Home onLogout={logoutHandler} />} */}
+
+        {/* NOTE Use ctx */}
+        {!ctx.isLoggedIn && <Login />}
+        {ctx.isLoggedIn && <Home />}
       </main>
     </React.Fragment>
   );
