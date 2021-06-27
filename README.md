@@ -8,13 +8,13 @@ Learn how useEffect works in authentication app. For the example, placing useEff
 
 Combine `useEffect()` with `useReducer()` to shorten your code. You will place state, function inside `useReducer()` then call it in your `useEffect()` for effeciency.
 
-## `useContext`
+## `useContext()`
 
-Using `useContext` in passing login status inside localstorage make it easier for all descendant components to read it without be pass one by one by parent's component.
+Using `useContext()` in passing login status inside localstorage make it easier for all descendant components to read it without be pass one by one by parent's component.
 
-## `useRef`
+## `useRef()`
 
-Set `useRef` for email and password input in order to send parameter to the Input.js and save there. The value inside will be the same even after the rendering.
+Set `useRef()` for email and password input in order to send parameter to the Input.js and save there. The value inside will be the same even after the rendering.
 
 ### NOTES
 
