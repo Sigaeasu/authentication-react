@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useContext } from 'react';
+import React, { useState, useEffect, useReducer, useContext, useRef } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -42,7 +42,13 @@ const Login = (props) => {
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();*/
   const [formIsValid, setFormIsValid] = useState(false);
+
+  // ANCHOR use useContext();
   const ctx = useContext(AuthContext)
+
+  // ANCHOR use useRef()
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
 
   // ANCHOR use useReducer() for email input
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
@@ -133,8 +139,15 @@ const Login = (props) => {
     event.preventDefault();
     /* props.onLogin(enteredEmail, enteredPassword); */
 
-    // NOTE useReducer
-    ctx.onLogin(emailState.value, passwordState.value);
+    if (formIsValid) {
+      // NOTE useReducer
+      ctx.onLogin(emailState.value, passwordState.value);
+    } else if (!emailIsValid) {
+      emailInputRef.current.activate()
+    } else {
+      passwordInputRef.current.activate()
+    }
+
   };
 
   return (
@@ -145,6 +158,7 @@ const Login = (props) => {
         
         {/* NOTE Move email input to Input.js */}
         <Input 
+          ref={emailInputRef}
           id="email"
           label="E-mail"
           type="email"
@@ -156,6 +170,7 @@ const Login = (props) => {
 
         {/* NOTE Move password input to Input.js */}
         <Input 
+          ref={passwordInputRef}
           id="password"
           label="Password"
           type="password"
