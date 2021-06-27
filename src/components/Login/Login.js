@@ -13,9 +13,18 @@ const Login = (props) => {
 
   // NOTE use useEffect to check both email & password after everything done running
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    // NOTE set timer on 500ms, only run once below before time out
+    const identifier = setTimeout(() => {
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500); 
+
+    // NOTE clean up function, re run time out once done
+    return () => {
+      clearTimeout();
+    }
+
   // NOTE add dependencies. If dependencies is changed, useEffect will run
   }, [enteredEmail, enteredPassword])
 
